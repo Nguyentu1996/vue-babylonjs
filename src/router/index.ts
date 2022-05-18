@@ -11,13 +11,42 @@ const routes: Array<RouteConfig> = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/basic",
+    name: "basic scene",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "about" */ "../components/BasicScene.vue"),
+  },
+  {
+    path: "/pbr",
+    name: "basic scene",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/PBR.vue"),
+  },
+  {
+    path: "/standard",
+    name: "basic scene",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../components/StandardMaterial.vue"
+      ),
+  },
+  {
+    path: "/custom-models",
+    name: "basic scene",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/CustomModels.vue"),
   },
 ];
 

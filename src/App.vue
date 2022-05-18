@@ -2,7 +2,10 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/basic">Basic Scene</router-link> |
+      <router-link to="/pbr">PBR material</router-link> |
+      <router-link to="/standard">Standard Material</router-link> |
+      <router-link to="/custom-model">Custom Models</router-link>
     </nav>
     <router-view />
   </div>

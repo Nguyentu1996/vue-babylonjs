@@ -201,6 +201,22 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@babylonjs/core@^5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-5.6.0.tgz#ab3613b8178e84868955ceaaf3b14fc8d6a179a6"
+  integrity sha512-CNoIRgKo0pbGqLmrntYIQYF/Plte18Fi3b/fTAKMZa+yClX9CQPr8R5v2r91YDRt54CitiSSMu9SRIuehMhQuA==
+  dependencies:
+    tslib "^2.3.1"
+
+"@babylonjs/loaders@^5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/loaders/-/loaders-5.6.0.tgz#6b2a0684e2403b85d887413ac4e31af486eac3d1"
+  integrity sha512-k9cgLFYXD378JIqqUYKKlP1KJ6LX6mismimshGpJqruA+VMM0W9J62IcLB2aPYFXfWAhPchVL1UW9I7uPIwdsw==
+  dependencies:
+    "@babylonjs/core" "^5.6.0"
+    babylonjs-gltf2interface "^5.6.0"
+    tslib "^2.3.1"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -1084,6 +1100,11 @@ babel-loader@^8.2.2:
     loader-utils "^2.0.0"
     make-dir "^3.1.0"
     schema-utils "^2.6.5"
+
+babylonjs-gltf2interface@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/babylonjs-gltf2interface/-/babylonjs-gltf2interface-5.6.0.tgz#b7dbac67b52463bbb65caeea0017fed852093377"
+  integrity sha512-mQD7K/jYHCsTSxyLq+TwCpl6Hi8/LaWDda8BrCem373hqDKByTcHSe0Vv5mwhN4H6xyHzNzZEfrPrTtEeuU+gg==
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -4665,7 +4686,7 @@ tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.3:
+tslib@^2.0.3, tslib@^2.3.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
