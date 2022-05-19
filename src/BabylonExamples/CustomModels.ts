@@ -8,6 +8,7 @@ import {
   PBRMaterial,
   Texture,
   SceneLoader,
+  MeshBuilder,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 export class CustomModels {
@@ -16,6 +17,8 @@ export class CustomModels {
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
+    this.CreateGround();
+    this.CreateBarrel();
     this.engine.runRenderLoop(() => {
       this.scene.render();
     });
@@ -32,7 +35,7 @@ export class CustomModels {
       new Vector3(0, 1, 0),
       this.scene
     );
-    // hemiLight.intensity = 0.5;
+    hemiLight.intensity = 0.5;
 
     const envTex = CubeTexture.CreateFromPrefilteredData(
       "./environment/sky.env",
@@ -41,9 +44,20 @@ export class CustomModels {
     scene.environmentTexture = envTex;
     scene.environmentIntensity = 0.5;
     scene.createDefaultSkybox(envTex, true);
+
     return scene;
   }
-
+  CreateGround(): void {
+    const ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 10, height: 10 },
+      this.scene
+    );
+    // const ball = MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
+    // ball.position = new Vector3(0, 1, 0);
+    ground.material = this.CreateAsphalt();
+    // ball.material = this.CreateMagic();
+  }
   CreateAsphalt(): PBRMaterial {
     const pbr = new PBRMaterial("pbr", this.scene);
     pbr.albedoTexture = new Texture(

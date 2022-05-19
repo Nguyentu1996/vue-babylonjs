@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h3>Babylon Js Custom Models</h3>
+    <h3>Babylon Js Basic Scene</h3>
     <canvas></canvas>
   </div>
 </template>
 
 <script lang="ts">
-import { CustomModels } from "@/BabylonExamples/CustomModels";
+import { Village } from "@/BuildVillage/Village";
 export default {
   name: "BabylonExample",
   props: {
@@ -15,7 +15,7 @@ export default {
   mounted() {
     const canvas = document.querySelector("canvas");
     if (canvas) {
-      new CustomModels(canvas);
+      new Village(canvas);
     }
   },
 };

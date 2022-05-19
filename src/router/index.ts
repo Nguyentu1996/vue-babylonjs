@@ -8,7 +8,8 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/Village.vue"),
   },
   {
     path: "/basic",
@@ -40,7 +41,7 @@ const routes: Array<RouteConfig> = [
       ),
   },
   {
-    path: "/custom-models",
+    path: "/custom-model",
     name: "basic scene",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
