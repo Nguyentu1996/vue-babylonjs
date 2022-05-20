@@ -74,6 +74,9 @@ export class ArtDemo {
     wall.material = wallMat;
     wall.position = new Vector3(0, 0, 10);
     wall.checkCollisions = true;
+    const boundary = wall.clone("boundary");
+    boundary.position.z -= 1;
+    boundary.isVisible = false;
     //finally, say which mesh will be collisionable
     const places = [];
     // places.push([0, 0, 10, 0]); // front
@@ -90,10 +93,17 @@ export class ArtDemo {
       walls[i].position = new Vector3(x, y, z);
       walls[i].rotation.y = rotationY;
       walls[i].checkCollisions = true;
-      // walls[i].showBoundingBox = true;
-      // const boundary = walls[i].clone("boundary" + i);
-      // // boundary.position
-      // boundary.isVisible = false;
+      const boundary = walls[i].clone("boundary" + i);
+      if (x !== 0) {
+        if (x > 0) {
+          boundary.position.x -= 1;
+        } else {
+          boundary.position.x += 1;
+        }
+      } else {
+        boundary.position.z += 1;
+      }
+      boundary.isVisible = false;
     }
     return wall;
   }

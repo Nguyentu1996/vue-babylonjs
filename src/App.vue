@@ -5,7 +5,8 @@
       <router-link to="/basic">Basic Scene</router-link> |
       <router-link to="/pbr">PBR material</router-link> |
       <router-link to="/standard">Standard Material</router-link> |
-      <router-link to="/custom-model">Custom Models</router-link>
+      <router-link to="/custom-model">Custom Models</router-link> |
+      <router-link to="/demo">Art Room Demo</router-link>
     </nav>
     <router-view />
   </div>
