@@ -6,9 +6,8 @@
 </template>
 
 <script lang="ts">
-import { ArtDemo } from "@/art-3d/art-3d";
+import { ArtDemo } from "@/Art3d/art-3d";
 export default {
-  name: "BabylonExample",
   props: {
     msg: String,
   },
