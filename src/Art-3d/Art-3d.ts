@@ -1,3 +1,4 @@
+import { ArtList, Rotation } from "@/modal/art-list";
 import {
   Scene,
   Engine,
@@ -8,6 +9,9 @@ import {
   StandardMaterial,
   Texture,
   Mesh,
+  Color3,
+  TransformNode,
+  Color4,
 } from "@babylonjs/core";
 
 export class ArtDemo {
@@ -15,14 +19,16 @@ export class ArtDemo {
   engine: Engine;
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
-    this.scene = this.CreateScene();
+    this.scene = this.createScene();
     this.createRoom();
+    this.buildArt();
     this.engine.runRenderLoop(() => {
       this.scene.render();
     });
   }
-  CreateScene(): Scene {
+  createScene(): Scene {
     const scene = new Scene(this.engine);
+    scene.clearColor = new Color4(255, 255, 255, 1);
     scene.gravity = new Vector3(0, -0.9, 0);
     const camera = new UniversalCamera(
       "camera",
@@ -39,12 +45,14 @@ export class ArtDemo {
       new Vector3(0, 10, -1),
       this.scene
     );
+    hemiLight.diffuse = new Color3(15, 15, 15);
+
     // hemiLight.intensity = 0.7;
     return scene;
   }
   createRoom() {
     this.buildGround();
-    const wall = this.buildWall();
+    this.buildWall();
   }
   buildGround(): Mesh {
     const ground = MeshBuilder.CreateGround(
@@ -62,7 +70,7 @@ export class ArtDemo {
     ground.isPickable = false;
     return ground;
   }
-  buildWall() {
+  buildWall(): void {
     const wallMat = new StandardMaterial("wallMat", this.scene);
     const wallTexture = new Texture("./textures/wall/Wall.jpg");
     wallMat.diffuseTexture = wallTexture;
@@ -79,32 +87,87 @@ export class ArtDemo {
     boundary.isVisible = false;
     //finally, say which mesh will be collisionable
     const places = [];
-    // places.push([0, 0, 10, 0]); // front
-    places.push([0, 0, -10, Math.PI, 1]); // back
-    places.push([10, 0, 0, Math.PI / 2, -1]); // right
-    places.push([-10, 0, 0, -Math.PI / 2, 1]); // left
+    // places.push([0, 0, 10]); // front
+    places.push([0, 0, -10, Rotation.BACK]); // back
+    places.push([10, 0, 0, Rotation.RIGHT]); // right
+    places.push([-10, 0, 0, Rotation.LEFT]); // left
     const walls = [];
     for (let i = 0; i < places.length; i++) {
-      walls[i] = wall.createInstance("wall" + i);
+      walls[i] = wall.clone("wall" + i);
       const x = places[i][0];
       const y = places[i][1];
       const z = places[i][2];
       const rotationY = places[i][3];
       walls[i].position = new Vector3(x, y, z);
       walls[i].rotation.y = rotationY;
-      walls[i].checkCollisions = true;
       const boundary = walls[i].clone("boundary" + i);
+      const boundaryNum = 1;
+      boundary.isVisible = false;
+
       if (x !== 0) {
         if (x > 0) {
-          boundary.position.x -= 1;
+          boundary.position.x -= boundaryNum;
         } else {
-          boundary.position.x += 1;
+          boundary.position.x += boundaryNum;
         }
       } else {
-        boundary.position.z += 1;
+        boundary.position.z += boundaryNum;
       }
-      boundary.isVisible = false;
     }
-    return wall;
+  }
+  buildArt() {
+    // TODO
+    const art = MeshBuilder.CreateBox("art", {
+      width: 1.325,
+      height: 2,
+      depth: 0.02,
+    });
+    const artMat = new StandardMaterial("artMat", this.scene);
+    artMat.diffuseColor = Color3.Black();
+    art.material = artMat;
+    const image = MeshBuilder.CreatePlane("img", { width: 1.325, height: 2 });
+    const imgMat = new StandardMaterial("imgMat", this.scene);
+    const imgTexture = new Texture("./textures/artworks/art1.jpeg", this.scene);
+
+    imgMat.diffuseTexture = imgTexture;
+    image.material = imgMat;
+    image.translate(new Vector3(0, 0, -0.02), 1);
+    const group = new TransformNode(`artwork`);
+    image.parent = group;
+    art.parent = group;
+    group.position = new Vector3(0, 2, 10);
+    console.log("group", group.getChildTransformNodes());
+    const artList: ArtList[] = [
+      {
+        imgUrl: "./textures/artworks/art1.jpeg",
+        height: 2,
+        width: 1.325,
+        position: [],
+      },
+      {
+        imgUrl: "./textures/artworks/art2.jpeg",
+        height: 2,
+        width: 1.325,
+        position: [],
+      },
+      {
+        imgUrl: "./textures/artworks/art3.jpeg",
+        height: 2,
+        width: 1.325,
+        position: [],
+      },
+      {
+        imgUrl: "./textures/artworks/art4.jpeg",
+        height: 2,
+        width: 1.325,
+        position: [],
+      },
+    ];
+    // for (let i = 0; i < artList.length; i++) {
+    //   //
+    //   const groupNew = new TransformNode(`artwork${i}`);
+
+    //   const groupClone = group.clone(`"art" + ${i}`, groupNew, true);
+    // }
   }
 }
