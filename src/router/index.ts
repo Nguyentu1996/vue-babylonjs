@@ -7,9 +7,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "demo",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../components/Village.vue"),
+    redirect: "/demo",
   },
   {
     path: "/basic",
