@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "home",
+    name: "demo",
     component: () =>
       import(/* webpackChunkName: "about" */ "../components/Village.vue"),
   },

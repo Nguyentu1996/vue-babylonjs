@@ -13,11 +13,13 @@ import {
   TransformNode,
   Color4,
   DirectionalLight,
+  ShadowGenerator,
 } from "@babylonjs/core";
 
 export class ArtTextureDemo {
   scene: Scene;
   engine: Engine;
+  shadowGenerator!: ShadowGenerator;
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.createScene();
@@ -41,11 +43,15 @@ export class ArtTextureDemo {
     camera.checkCollisions = true;
 
     camera.attachControl();
-    const hemiLight = new HemisphericLight(
+    const hemiLight = new DirectionalLight(
       "hemiLight",
-      new Vector3(0, 10, -1),
+      new Vector3(-1, -2, -1),
       this.scene
     );
+    hemiLight.position = new Vector3(20, 40, 20);
+    hemiLight.intensity = 0.5;
+    this.shadowGenerator = new ShadowGenerator(1024, hemiLight);
+
     // const light = new DirectionalLight(
     //   "DirectionalLight",
     //   new Vector3(0, -1, 0),
@@ -68,24 +74,25 @@ export class ArtTextureDemo {
       this.scene
     );
     const groundMat = new StandardMaterial("groundMat", this.scene);
-    // groundMat.diffuseColor = new Color3(0, 0, 1);
-    groundMat.diffuseColor = new Color3(255 / 255, 252 / 255, 252 / 255);
-    groundMat.ambientColor = Color3.White();
+    groundMat.specularColor = new Color3(0, 0, 0);
     // const groundTexture = new Texture("./textures/floor/Floor_DIF.jpg");
+    // groundMat.diffuseTexture = groundTexture;
     // groundTexture.uScale = 4;
     // groundTexture.vScale = 4;
     ground.material = groundMat;
     console.log("mess", ground);
     ground.checkCollisions = true;
     ground.isPickable = false;
+    ground.receiveShadows = true;
+
     return ground;
   }
   buildWall(width = 20, height = 10, depth = 0.5): Mesh[] {
     const wallMat = new StandardMaterial("wallMat", this.scene);
     // const wallTexture = new Texture("./textures/wall/Wall.jpg");
     // wallMat.diffuseTexture = wallTexture;
-    // wallMat.diffuseColor = new Color3(247 / 255, 247 / 255, 247 / 255);
-    wallMat.ambientColor = new Color3(247 / 255, 247 / 255, 247 / 255);
+    wallMat.diffuseColor = new Color3(247 / 255, 247 / 255, 247 / 255);
+    // wallMat.ambientColor = new Color3(247 / 255, 247 / 255, 247 / 255);
     wallMat.emissiveColor = new Color3(79 / 255, 76 / 255, 76 / 255);
     // groundMat.diffuseColor = new Color3(237 / 255, 236 / 255, 235 / 255);
 
@@ -128,8 +135,12 @@ export class ArtTextureDemo {
       } else {
         boundary.position.z += boundaryNum;
       }
+      this.shadowGenerator?.getShadowMap()?.renderList?.push(walls[i]);
     }
     walls.push(wall);
+    this.shadowGenerator?.getShadowMap()?.renderList?.push(wall);
+    this.shadowGenerator.addShadowCaster(wall);
+    // this.shadowGenerator.useExponentialShadowMap = true;
     return walls;
   }
   buildArt() {
