@@ -21,19 +21,9 @@ export class BasicScene {
     const scene = new Scene(this.engine);
     const camera = new FreeCamera("camera", new Vector3(0, 1, -5), this.scene);
     camera.attachControl();
-    const hemiLight = new HemisphericLight(
-      "hemiLight",
-      new Vector3(0, 1, 0),
-      this.scene
-    );
-    hemiLight.intensity = 0.5;
-    const ground = MeshBuilder.CreateGround(
-      "ground",
-      { width: 10, height: 10 },
-      this.scene
-    );
-    const ball = MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
-    ball.position = new Vector3(0, 1, 0);
+    new HemisphericLight("light", new Vector3(0, 1, 0), this.scene);
+    MeshBuilder.CreateGround("ground", { width: 10, height: 10 }, this.scene);
+    MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
     return scene;
   }
 }
